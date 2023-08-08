@@ -1,5 +1,16 @@
-import '@/styles/globals.css'
+// import '@/styles/globals.css'
+import { ApolloProvider } from '@apollo/client'
+import { useApollo } from '../lib/apollo'
+import { ChakraProvider } from '@chakra-ui/react'
 
 export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  const apolloClient = useApollo(pageProps.initialApolloState || {})
+
+  return (
+    <ApolloProvider client={apolloClient}>
+      <ChakraProvider>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </ApolloProvider>
+  )
 }
