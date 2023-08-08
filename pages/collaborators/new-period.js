@@ -13,7 +13,7 @@ function NewPeriodPage() {
   const [error, setError] = useState(null)
   const [addPeriod] = useMutation(ADD_PERIOD, {
     onCompleted() {
-      router.push('/')
+      router.push(`${collaboratorId}`)
     },
   })
 
