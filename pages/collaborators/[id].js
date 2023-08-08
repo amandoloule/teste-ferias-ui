@@ -3,20 +3,8 @@ import { useRouter } from 'next/router'
 import GET_COLLABORATOR from '../../lib/apollo/queries/getCollaborator'
 import Collaborator from '../../components/Collaborator'
 import Loading from '../../components/Loading'
-import { Box, Flex, Heading, Link, VStack, ChakraLink } from '@chakra-ui/react'
-
-const Period = ({ start_date, end_date }) => {
-  return (
-    <Box p={3} borderWidth="1px" borderRadius="lg">
-      <p>
-        <b>Data de Início:</b> {start_date}
-      </p>
-      <p>
-        <b>Data de Término:</b> {end_date}
-      </p>
-    </Box>
-  )
-}
+import Period from '../../components/Period'
+import { Box, Flex, Heading, Link, VStack } from '@chakra-ui/react'
 
 function CollaboratorPage() {
   const router = useRouter()
