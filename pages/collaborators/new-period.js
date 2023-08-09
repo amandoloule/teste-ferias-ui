@@ -12,8 +12,16 @@ function NewPeriodPage() {
   const [formState, setFormState] = useState({})
   const [error, setError] = useState(null)
   const [addPeriod] = useMutation(ADD_PERIOD, {
-    onCompleted() {
-      router.push(`${collaboratorId}`)
+    onCompleted(data) {
+      const createPeriodData = data?.createPeriod?.data
+      if (createPeriodData) {
+        router.push(`${collaboratorId}`)
+      } else {
+        setError('Erro ao criar período de férias')
+      }
+    },
+    onError(error) {
+      setError(error.message)
     },
   })
 
