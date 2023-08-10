@@ -4,7 +4,7 @@ import GET_COLLABORATOR from '../../lib/apollo/queries/getCollaborator'
 import Collaborator from '../../components/Collaborator'
 import Loading from '../../components/Loading'
 import Period from '../../components/Period'
-import { Box, Flex, Heading, Link, VStack } from '@chakra-ui/react'
+import { Box, Flex, Heading, Link, Text, VStack } from '@chakra-ui/react'
 
 function CollaboratorPage() {
   const router = useRouter()
@@ -22,27 +22,43 @@ function CollaboratorPage() {
   const collaborator = data?.collaborator?.data
   const periods = collaborator?.attributes?.periods?.data || []
 
+  const totalYears = periods.reduce((total, period) => {
+    const startDate = new Date(period.attributes.start_date)
+    const endDate = new Date(period.attributes.end_date)
+    const daysInPeriod = (endDate - startDate) / (1000 * 60 * 60 * 24) + 1
+    return total + daysInPeriod / 365
+  }, 0)
+
+  const totalVacationDays = Math.floor(totalYears) * 30
+
   return (
     <Flex
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
-      mt={20}
+      mt={10}
     >
-      <Heading as="h1" fontSize="3xl" mb={5}>
+      <Heading as="h1" fontSize="3xl" mb={3}>
         Colaborador
       </Heading>
-      <Box>
+
+      <Box mb={4}>
         <Collaborator {...collaborator.attributes} />
       </Box>
-      <Box mt={5}>
-        <Heading as="h2" fontSize="xl" mb={3}>
+
+      <Box mt={4}>
+        <Text fontSize="lg" fontWeight="bold" color="purple.600" mb={2}>
+          Total de Férias Ganhas: {totalVacationDays} dias
+        </Text>
+
+        <Heading as="h2" fontSize="xl" mb={2}>
           Períodos de Férias
         </Heading>
-        <Link href={`new-period?collaboratorId=${id}`}>
+        <Link href={`new-period?collaboratorId=${id}`} color="purple.600">
           Adicionar Novo Período de Férias
         </Link>
-        <VStack spacing={3} align="stretch">
+
+        <VStack spacing={2} align="stretch" mt={3}>
           {periods.map((period) => (
             <Period
               key={period.id}
@@ -52,7 +68,8 @@ function CollaboratorPage() {
           ))}
         </VStack>
       </Box>
-      <Link href="/" color="purple.600">
+
+      <Link href="/" color="purple.600" mt={4}>
         Voltar ao Início
       </Link>
     </Flex>
