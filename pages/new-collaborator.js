@@ -3,8 +3,7 @@ import { useRouter } from 'next/router'
 import { useMutation } from '@apollo/client'
 import ADD_COLLABORATOR from '../lib/apollo/queries/addCollaborator'
 import { Box, Flex, Heading, Input, Button, Link, Text } from '@chakra-ui/react'
-import { format, parse, isValid } from 'date-fns'
-import { utcToZonedTime } from 'date-fns-tz'
+import { isValidDateBrazilianFormat, convertToGraphQLDate } from '../utils'
 
 function NewCollaborator() {
   const router = useRouter()
@@ -32,17 +31,6 @@ function NewCollaborator() {
         [name]: e.target.value,
       })
     }
-  }
-
-  const isValidDateBrazilianFormat = (date) => {
-    const parsedDate = parse(date, 'dd-MM-yyyy', new Date())
-    return isValid(parsedDate)
-  }
-
-  const convertToGraphQLDate = (date) => {
-    const parsedDate = parse(date, 'dd-MM-yyyy', new Date())
-    const zonedDate = utcToZonedTime(parsedDate, 'America/Sao_Paulo')
-    return format(zonedDate, 'yyyy-MM-dd')
   }
 
   const handleSubmit = (event) => {

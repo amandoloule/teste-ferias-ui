@@ -3,8 +3,7 @@ import { useRouter } from 'next/router'
 import { useMutation } from '@apollo/client'
 import ADD_PERIOD from '../../lib/apollo/queries/addPeriod'
 import { Box, Flex, Heading, Input, Button, Link, Text } from '@chakra-ui/react'
-import { format, parse, isValid } from 'date-fns'
-import { utcToZonedTime } from 'date-fns-tz'
+import { isValidDateBrazilianFormat, convertToGraphQLDate } from '../../utils'
 
 function NewPeriodPage() {
   const router = useRouter()
@@ -41,17 +40,6 @@ function NewPeriodPage() {
         [name]: e.target.value,
       })
     }
-  }
-
-  const isValidDateBrazilianFormat = (date) => {
-    const parsedDate = parse(date, 'dd-MM-yyyy', new Date())
-    return isValid(parsedDate)
-  }
-
-  const convertToGraphQLDate = (date) => {
-    const parsedDate = parse(date, 'dd-MM-yyyy', new Date())
-    const zonedDate = utcToZonedTime(parsedDate, 'America/Sao_Paulo')
-    return format(zonedDate, 'yyyy-MM-dd')
   }
 
   const handleSubmit = (event) => {
