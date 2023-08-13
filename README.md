@@ -1,3 +1,15 @@
+# Observações sobre o projeto
+
+Projeto utilizando npm
+
+A API está atribuída no arquivo next.config.js
+
+Testes unitários e de integração feitos em JEST. Podem ser executados através do comando:
+
+```
+npm test
+```
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
