@@ -19,6 +19,10 @@ function CollaboratorPage() {
     return <Loading />
   }
 
+  const refreshPage = () => {
+    router.replace('/')
+  }
+
   const collaborator = data?.collaborator?.data
   const periods = collaborator?.attributes?.periods?.data || []
 
@@ -43,7 +47,9 @@ function CollaboratorPage() {
       </Heading>
 
       <Box mb={4}>
-        <Collaborator {...collaborator.attributes} />
+        {collaborator?.attributes && (
+          <Collaborator {...collaborator.attributes} />
+        )}
       </Box>
 
       <Box mt={4}>
@@ -64,6 +70,9 @@ function CollaboratorPage() {
               key={period.id}
               start_date={period.attributes.start_date}
               end_date={period.attributes.end_date}
+              periodId={period.id}
+              numPeriods={period.attributes.num_periods}
+              refreshPage={refreshPage}
             />
           ))}
         </VStack>
