@@ -1,12 +1,10 @@
 import { Box, Text, Divider } from '@chakra-ui/react'
-import { format, utcToZonedTime } from 'date-fns-tz'
+import { format, zonedTimeToUtc } from 'date-fns-tz'
 
 function Collaborator({ name, position, contract_dt }) {
   const brazilTimeZone = 'America/Sao_Paulo'
-  const formattedDate = format(
-    utcToZonedTime(new Date(contract_dt), brazilTimeZone),
-    'dd-MM-yyyy'
-  )
+  const contractDate = zonedTimeToUtc(contract_dt, brazilTimeZone)
+  const formattedDate = format(contractDate, 'dd-MM-yyyy')
 
   return (
     <Box

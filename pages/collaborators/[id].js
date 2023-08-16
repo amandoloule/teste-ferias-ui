@@ -19,10 +19,6 @@ function CollaboratorPage() {
     return <Loading />
   }
 
-  const refreshPage = () => {
-    router.replace('/')
-  }
-
   const collaborator = data?.collaborator?.data
   const periods = collaborator?.attributes?.periods?.data || []
 
@@ -72,7 +68,6 @@ function CollaboratorPage() {
               end_date={period.attributes.end_date}
               periodId={period.id}
               numPeriods={period.attributes.num_periods}
-              refreshPage={refreshPage}
             />
           ))}
         </VStack>

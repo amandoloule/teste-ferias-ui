@@ -14,27 +14,27 @@ import { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import UPDATE_PERIOD from '../lib/apollo/queries/updatePeriod'
 
-const Period = ({
-  start_date,
-  end_date,
-  periodId,
-  numPeriods,
-  refreshPage,
-}) => {
+const Period = ({ start_date, end_date, periodId, numPeriods }) => {
   const brazilTimeZone = 'America/Sao_Paulo'
   const startDate = utcToZonedTime(new Date(start_date), brazilTimeZone)
   const endDate = utcToZonedTime(new Date(end_date), brazilTimeZone)
   const formattedStartDate = format(startDate, 'dd-MM-yyyy')
   const formattedEndDate = format(endDate, 'dd-MM-yyyy')
 
+  const [periods, setPeriods] = useState(numPeriods)
   const [fractureValue, setFractureValue] = useState(numPeriods)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [changePeriod] = useMutation(UPDATE_PERIOD, {
     onCompleted(data) {
-      // Handle success if needed
+      const changePeriodData = data?.updatePeriod?.data
+      if (changePeriodData) {
+        setPeriods(fractureValue)
+      } else {
+        setError('Erro ao atualizar período de férias')
+      }
     },
     onError(error) {
-      // Handle error if needed
+      setError(error.message)
     },
   })
 
@@ -43,11 +43,8 @@ const Period = ({
   }
 
   const handleFracture = () => {
-    if (numPeriods === 1 && fractureValue > 1) {
+    if (periods === 1 && fractureValue > 1) {
       setIsDialogOpen(true)
-    } else {
-      // Call your mutation here for non-fractured period
-      // You can customize this part based on your requirements
     }
   }
 
@@ -56,21 +53,13 @@ const Period = ({
   }
 
   const handleConfirmFracture = async () => {
-    try {
-      const { data } = await changePeriod({
-        variables: {
-          periodId: periodId,
-          numPeriods: parseInt(fractureValue),
-        },
-      })
-
-      if (data && data.updatePeriod && data.updatePeriod.data) {
-        refreshPage()
-      }
-      setIsDialogOpen(false)
-    } catch (error) {
-      console.error('Error updating period:', error)
-    }
+    await changePeriod({
+      variables: {
+        periodId: periodId,
+        numPeriods: parseInt(fractureValue),
+      },
+    })
+    setIsDialogOpen(false)
   }
 
   const totalDays =
@@ -91,13 +80,13 @@ const Period = ({
         value={fractureValue}
         onChange={handleFractureChange}
         mt={4}
-        disabled={numPeriods > 1}
+        disabled={periods > 1}
       >
         <option value={1}>Não Fracionar</option>
-        <option value={2} disabled={totalDays < 14}>
+        <option value={2} disabled={totalDays <= 14}>
           Fracionar em 2 períodos
         </option>
-        <option value={3} disabled={totalDays < 19}>
+        <option value={3} disabled={totalDays <= 19}>
           Fracionar em 3 períodos
         </option>
       </Select>
@@ -105,7 +94,7 @@ const Period = ({
         colorScheme="teal"
         mt={2}
         onClick={handleFracture}
-        isDisabled={numPeriods > 1}
+        isDisabled={periods > 1}
       >
         Fracionar
       </Button>
