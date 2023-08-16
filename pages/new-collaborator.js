@@ -1,3 +1,7 @@
+/*
+* Página para adicionar um colaborador
+*/
+
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useMutation } from '@apollo/client'

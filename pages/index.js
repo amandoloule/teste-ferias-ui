@@ -1,3 +1,7 @@
+/*
+* Página inicial na qual é listada os colaboradores
+*/
+
 import { useQuery } from '@apollo/client'
 import GET_COLLABORATORS from '../lib/apollo/queries/getCollaborators'
 import Collaborator from '../components/Collaborator'

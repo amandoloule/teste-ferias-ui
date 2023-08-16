@@ -1,3 +1,7 @@
+/*
+* Componente Collaborator
+*/
+
 import { Box, Text, Divider } from '@chakra-ui/react'
 import { format, zonedTimeToUtc } from 'date-fns-tz'
 

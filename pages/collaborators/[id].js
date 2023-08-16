@@ -1,3 +1,7 @@
+/*
+* Página individual com um colaborador e na qual é listada os períodos
+*/
+
 import { useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
 import GET_COLLABORATOR from '../../lib/apollo/queries/getCollaborator'
@@ -22,13 +26,13 @@ function CollaboratorPage() {
   const collaborator = data?.collaborator?.data
   const periods = collaborator?.attributes?.periods?.data || []
 
+  // Código para calcular a quantidade de férias ganhas
   const totalYears = periods.reduce((total, period) => {
     const startDate = new Date(period.attributes.start_date)
     const endDate = new Date(period.attributes.end_date)
     const daysInPeriod = (endDate - startDate) / (1000 * 60 * 60 * 24) + 1
     return total + daysInPeriod / 365
   }, 0)
-
   const totalVacationDays = Math.floor(totalYears) * 30
 
   return (

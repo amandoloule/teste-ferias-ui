@@ -2,6 +2,8 @@
  * @jest-environment jsdom
  */
 
+// Testes de Integração
+
 import '@testing-library/jest-dom'
 
 import { render } from '@testing-library/react'

@@ -1,3 +1,7 @@
+/*
+* Algumas funções
+*/
+
 import { format, parse, isValid } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
 

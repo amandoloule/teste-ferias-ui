@@ -1,3 +1,7 @@
+/*
+* Componente Period
+*/
+
 import {
   Box,
   Button,

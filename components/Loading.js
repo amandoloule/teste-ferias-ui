@@ -1,3 +1,7 @@
+/*
+* Componente Loading
+*/
+
 import { Box, Flex, Spinner } from '@chakra-ui/react'
 
 function Loading() {

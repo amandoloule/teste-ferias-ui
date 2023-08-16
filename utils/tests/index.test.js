@@ -1,3 +1,7 @@
+/*
+* Testes unitários
+*/
+
 import { isValidDateBrazilianFormat, convertToGraphQLDate } from '../index'
 
 describe('Checar se é uma data brasileira válida', () => {
