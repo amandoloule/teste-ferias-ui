@@ -43,7 +43,9 @@ function CollaboratorPage() {
       </Heading>
 
       <Box mb={4}>
-        <Collaborator {...collaborator.attributes} />
+        {collaborator?.attributes && (
+          <Collaborator {...collaborator.attributes} />
+        )}
       </Box>
 
       <Box mt={4}>
@@ -64,6 +66,8 @@ function CollaboratorPage() {
               key={period.id}
               start_date={period.attributes.start_date}
               end_date={period.attributes.end_date}
+              periodId={period.id}
+              numPeriods={period.attributes.num_periods}
             />
           ))}
         </VStack>
