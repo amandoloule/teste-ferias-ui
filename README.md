@@ -14,6 +14,30 @@ O app está online no link a seguir:
 
 [Acessar App](https://teste-ferias-wm-1baa253b1825.herokuapp.com)
 
+## Estrutura do Projeto
+
+- pages
+    - index.js (Página inicial na qual é listada os colaboradores)
+    - new-collaborator.js (Página para adicionar um colaborador)
+    - collaborators
+        - [id].js (Página individual com um colaborador e na qual é listada os períodos)
+        - new-period.js (Página para adicionar um período)
+- components
+    - Collaborator.js (Componente Collaborator)
+    - Period.js (Componente Period)
+    - Loading.js (Componente Loading)
+    - tests (Testes de Integração)
+- utils (Funções Úteis)
+    - tests (Testes Unitários)
+- lib
+    - index.js (Configurações do Apollo Client)
+    - queries
+        - getCollaborators.js (Query para obter o colaboradores)
+        - getCollaborator.js (Query para obter um colaborador)
+        - addCollaborator.js (Mutation para adicionar um colaborador)
+        - addPeriod.js (Mutation para adicionar um período)
+        - updatePeriod.js (Mutation para atualizar um período)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
