@@ -8,19 +8,24 @@ import GET_COLLABORATOR from '../../lib/apollo/queries/getCollaborator'
 import Collaborator from '../../components/Collaborator'
 import Loading from '../../components/Loading'
 import Period from '../../components/Period'
+import Error from '../../components/Error'
 import { Box, Flex, Heading, Link, Text, VStack } from '@chakra-ui/react'
 
 function CollaboratorPage() {
   const router = useRouter()
   const { id } = router.query
 
-  const { loading, data } = useQuery(GET_COLLABORATOR, {
+  const { loading, error, data } = useQuery(GET_COLLABORATOR, {
     variables: { id },
     fetchPolicy: 'no-cache',
   })
 
   if (loading) {
     return <Loading />
+  }
+
+  if (error) {
+    return <Error errorMessage={error.message} />
   }
 
   const collaborator = data?.collaborator?.data

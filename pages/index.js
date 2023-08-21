@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/client'
 import GET_COLLABORATORS from '../lib/apollo/queries/getCollaborators'
 import Collaborator from '../components/Collaborator'
 import Loading from '../components/Loading'
+import Error from '../components/Error'
 import {
   Box,
   Flex,
@@ -15,12 +16,16 @@ import {
 } from '@chakra-ui/react'
 
 function HomePage() {
-  const { loading, data } = useQuery(GET_COLLABORATORS, {
+  const { loading, error, data } = useQuery(GET_COLLABORATORS, {
     fetchPolicy: 'no-cache',
   })
 
   if (loading) {
     return <Loading />
+  }
+
+  if (error) {
+    return <Error errorMessage={error.message} />
   }
 
   const collaborators = data.collaborators.data
