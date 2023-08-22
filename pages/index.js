@@ -1,7 +1,8 @@
 /*
-* Página inicial na qual é listada os colaboradores
-*/
+ * Página inicial na qual é listada os colaboradores
+ */
 
+import { useState } from 'react'
 import { useQuery } from '@apollo/client'
 import GET_COLLABORATORS from '../lib/apollo/queries/getCollaborators'
 import Collaborator from '../components/Collaborator'
@@ -16,9 +17,37 @@ import {
 } from '@chakra-ui/react'
 
 function HomePage() {
-  const { loading, error, data } = useQuery(GET_COLLABORATORS, {
-    fetchPolicy: 'no-cache',
+  const [hasMore, setHasMore] = useState(true)
+  const [page, setPage] = useState(1)
+  const { loading, error, data, fetchMore } = useQuery(GET_COLLABORATORS, {
+    fetchPolicy: 'cache-and-network',
+    variables: { page: 1, psize: 2 },
   })
+
+  const loadMore = () => {
+    fetchMore({
+      variables: {
+        page: page + 1,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult.collaborators.data.length) {
+          setHasMore(false)
+          return prev
+        }
+
+        return {
+          collaborators: {
+            ...fetchMoreResult.collaborators,
+            data: [
+              ...prev.collaborators.data,
+              ...fetchMoreResult.collaborators.data,
+            ],
+          },
+        }
+      },
+    })
+    setPage(page + 1)
+  }
 
   if (loading) {
     return <Loading />
@@ -70,6 +99,13 @@ function HomePage() {
           </ChakraLink>
         ))}
       </Box>
+      <Button
+        onClick={loadMore}
+        mt={4}
+        visibility={hasMore ? 'visible' : 'hidden'}
+      >
+        Ver mais...
+      </Button>
     </Flex>
   )
 }
