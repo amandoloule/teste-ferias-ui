@@ -18,6 +18,8 @@ Aqui você pode ver um vídeo apresentando o projeto:
 
 [Acessar Vídeo](https://1drv.ms/v/s!Arw6gFBgbC57ku5IT-J7ycbkfunxOQ)
 
+Foi adicionada <span style="color: red;">Paginação</span>.
+
 ## Estrutura do Projeto
 
 - pages
