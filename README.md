@@ -2,8 +2,6 @@
 
 Projeto utilizando npm
 
-A API está atribuída no arquivo next.config.js
-
 Testes unitários e de integração feitos em JEST. Podem ser executados através do comando:
 
 ```
